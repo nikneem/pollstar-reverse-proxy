@@ -6,7 +6,7 @@ param integrationResourceGroupName string
 param containerAppEnvironmentResourceName string
 
 param containerPort int = 80
-param containerAppName string = 'pollstar-reverse-proxy'
+param containerAppName string = 'pollstar-rev-prxy'
 
 resource containerAppEnvironments 'Microsoft.App/managedEnvironments@2022-03-01' existing = {
   name: containerAppEnvironmentResourceName

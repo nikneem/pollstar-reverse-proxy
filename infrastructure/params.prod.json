@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "systemName": {
-      "value": "pollstar-reverse-proxy"
+      "value": "pollstar-rev-prxy"
     },
     "environmentName": {
       "value": "prod"
