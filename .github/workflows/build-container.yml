@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 env:
-  IMAGE_NAME: pollstar-reverse-proxy
+  IMAGE_NAME: pollstar-rev-prxy
 
 jobs:
   versionize:
