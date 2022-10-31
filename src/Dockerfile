@@ -8,7 +8,7 @@ WORKDIR /src
 COPY ["PollStar.ReverseProxy.App/PollStar.ReverseProxy.App.csproj", "PollStar.ReverseProxy.App/"]
 RUN dotnet restore "PollStar.ReverseProxy.App/PollStar.ReverseProxy.App.csproj"
 COPY . .
-WORKDIR "/PollStar.ReverseProxy.App"
+WORKDIR "/src/PollStar.ReverseProxy.App"
 RUN dotnet build "PollStar.ReverseProxy.App.csproj" -c Release -o /app/build
 
 FROM build AS publish
