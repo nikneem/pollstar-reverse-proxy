@@ -3,6 +3,7 @@ const string defaultCorsPolicy = "defaultCorsPolicy";
 var builder = WebApplication.CreateBuilder(args);
 
 var proxyBuilder = builder.Services.AddReverseProxy();
+builder.Services.AddDaprClient();
 
 proxyBuilder.LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
