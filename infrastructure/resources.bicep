@@ -4,12 +4,17 @@ param containerVersion string
 param environmentName string
 param integrationResourceGroupName string
 param containerAppEnvironmentResourceName string
+param applicationInsightsResourceName string
 
 param containerPort int = 80
 param containerAppName string = 'pollstar-rev-prxy'
 
 resource containerAppEnvironments 'Microsoft.App/managedEnvironments@2022-03-01' existing = {
   name: containerAppEnvironmentResourceName
+  scope: resourceGroup(integrationResourceGroupName)
+}
+resource applicationInsights 'Microsoft.Insights/components@2020-02-02' existing = {
+  name: applicationInsightsResourceName
   scope: resourceGroup(integrationResourceGroupName)
 }
 
@@ -52,7 +57,12 @@ resource apiContainerApp 'Microsoft.App/containerApps@2022-03-01' = {
             cpu: json('0.25')
             memory: '0.5Gi'
           }
-          env: []
+          env: [
+            {
+              name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+              value: applicationInsights.properties.ConnectionString
+            }
+          ]
         }
       ]
       scale: {
