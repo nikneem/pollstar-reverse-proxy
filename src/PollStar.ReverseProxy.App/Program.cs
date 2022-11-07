@@ -1,15 +1,22 @@
+using PollStar.ReverseProxy.App;
+using PollStar.ReverseProxy.App.Proxy;
+using Yarp.ReverseProxy.Configuration;
 
-const string defaultCorsPolicy = "defaultCorsPolicy";
+
 var builder = WebApplication.CreateBuilder(args);
 
-var proxyBuilder = builder.Services.AddReverseProxy();
+
+builder.Services
+    .AddSingleton<IProxyConfigProvider>(new PollStarProxyConfigProvider())
+    .AddReverseProxy();
 builder.Services.AddDaprClient();
 
-proxyBuilder.LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+//var proxyBuilder = builder.Services.AddReverseProxy();
+//proxyBuilder.LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
 builder.Services.AddCors(opts =>
 {
-    opts.AddPolicy(defaultCorsPolicy, builder =>
+    opts.AddPolicy(Constants.DefaultCorsPolicy, builder =>
     {
         builder.AllowAnyHeader()
             .AllowAnyMethod()
@@ -17,6 +24,8 @@ builder.Services.AddCors(opts =>
             .WithOrigins("http://localhost:4200", "https://pollstar.hexmaster.nl");
     });
 });
+
+builder.Services.AddApplicationInsightsTelemetry();
 
 var app = builder.Build();
 
